@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwowox666cr7p"]
+
+[ext_resource type="Script" uid="uid://bhu7kttda5y1p" path="res://player/player.gd" id="1_3c3w1"]
+[ext_resource type="Texture2D" uid="uid://cm8pe0r4okb67" path="res://assets/characters/main_character/walk_and_idle.png" id="2_wnvi2"]
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_3c3w1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_wnvi2")
