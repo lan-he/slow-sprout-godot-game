@@ -1,8 +1,39 @@
-[gd_scene load_steps=2 format=3 uid="uid://bpp8r21ju6umo"]
+[gd_scene load_steps=5 format=3 uid="uid://bpp8r21ju6umo"]
 
 [ext_resource type="PackedScene" uid="uid://dwowox666cr7p" path="res://player/Player.tscn" id="1_nbc6x"]
+[ext_resource type="TileSet" uid="uid://bmblwldpd8sp5" path="res://Sprites/Tileset.tres" id="1_yiwpq"]
+[ext_resource type="PackedScene" uid="uid://bsqgme07iv8oi" path="res://word/tree.tscn" id="2_h6nst"]
+[ext_resource type="PackedScene" uid="uid://cpxixbrfaywyl" path="res://word/grass.tscn" id="4_yiwpq"]
 
 [node name="Main" type="Node2D"]
+y_sort_enabled = true
+
+[node name="GroundLayer" type="Node2D" parent="."]
+z_index = -10
+
+[node name="TileMapLayer" type="TileMapLayer" parent="GroundLayer"]
+tile_set = ExtResource("1_yiwpq")
+
+[node name="Items" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="StaticBody2D" parent="Items" instance=ExtResource("2_h6nst")]
+position = Vector2(59, 44)
+
+[node name="StaticBody2D2" parent="Items" instance=ExtResource("2_h6nst")]
+position = Vector2(158, 45)
+
+[node name="Grass" parent="Items" instance=ExtResource("4_yiwpq")]
+position = Vector2(-88, 16)
+
+[node name="Grass2" parent="Items" instance=ExtResource("4_yiwpq")]
+position = Vector2(-72, 16)
+
+[node name="Grass3" parent="Items" instance=ExtResource("4_yiwpq")]
+position = Vector2(-88, 32)
+
+[node name="Grass4" parent="Items" instance=ExtResource("4_yiwpq")]
+position = Vector2(-72, 32)
 
 [node name="Player" parent="." instance=ExtResource("1_nbc6x")]
-position = Vector2(109, 54)
+position = Vector2(-1, 16)
