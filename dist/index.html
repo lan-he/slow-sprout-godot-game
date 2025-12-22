@@ -92,7 +92,32 @@ body {
 		</style>
 		<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
 <link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
-
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<script>
+    // 拦截并修改即将加载的脚本和资源路径
+    (function() {
+        const version = Date.now(); // 使用当前时间戳作为版本号
+        const oldCreateElement = document.createElement;
+        
+        document.createElement = function(tagName) {
+            const element = oldCreateElement.call(document, tagName);
+            if (tagName.toLowerCase() === 'script' || tagName.toLowerCase() === 'link') {
+                const observer = new MutationObserver(() => {
+                    if (element.src && !element.src.includes('v=')) {
+                        element.src += (element.src.includes('?') ? '&' : '?') + 'v=' + version;
+                    }
+                    if (element.href && !element.href.includes('v=')) {
+                        element.href += (element.href.includes('?') ? '&' : '?') + 'v=' + version;
+                    }
+                });
+                observer.observe(element, { attributes: true, attributeFilter: ['src', 'href'] });
+            }
+            return element;
+        };
+    })();
+</script>
 	</head>
 	<body>
 		<canvas id="canvas">
@@ -111,7 +136,7 @@ body {
 
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":525040,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":525040,"index.wasm":36145869},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 

@@ -3,7 +3,7 @@ name: Deploy dist to GitHub Pages
 on:
   push:
     branches:
-      - main # 如果你用的是 master，改成 master
+      - main
 
 permissions:
   contents: write
@@ -13,13 +13,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 拉取代码
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. 部署 dist 到 gh-pages
+      # 1. 核心步骤：使用 sed 给资源添加版本号
+      - name: Add versioning to assets to avoid cache
+        run: |
+          # 获取当前时间戳或 Git Commit 哈希作为版本号
+          VERSION=$(date +%s)
+          echo "Setting version to: $VERSION"
+
+          # 找到 dist 下所有的 .html 文件
+          # 将里面的 .js, .wasm, .pck 引用后面加上 ?v=时间戳
+          # 例如把 game.js 变成 game.js?v=123456
+          find ./dist -name "*.html" -exec sed -i "s/\.js\"/.js?v=$VERSION\"/g" {} +
+          find ./dist -name "*.html" -exec sed -i "s/\.wasm\"/.wasm?v=$VERSION\"/g" {} +
+          find ./dist -name "*.html" -exec sed -i "s/\.pck\"/.pck?v=$VERSION\"/g" {} +
+
+          # 顺便在 <head> 中插入禁止缓存的 Meta 标签
+          find ./dist -name "*.html" -exec sed -i '/<head>/a <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />' {} +
+
+      # 2. 准备部署环境
+      - name: Prepare dist folder
+        run: |
+          mkdir -p ./dist
+          touch ./dist/.nojekyll
+
+      # 3. 部署到 gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          force_orphan: true # 强制覆盖分支，确保旧文件不残留
