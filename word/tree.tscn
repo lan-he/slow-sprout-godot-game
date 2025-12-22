@@ -1,19 +1,19 @@
 [gd_scene load_steps=3 format=3 uid="uid://bsqgme07iv8oi"]
 
-[ext_resource type="Texture2D" uid="uid://cma6hmxrmhad0" path="res://assets/objects&items/farm_objects_free.png" id="1_brfkd"]
+[ext_resource type="Texture2D" uid="uid://bbk4eg86yqj00" path="res://assets/items/tree.png" id="1_s2np1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_brfkd"]
+radius = 7.142857
 
 [node name="StaticBody2D" type="StaticBody2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(2, -19.5)
-texture = ExtResource("1_brfkd")
-hframes = 3
-vframes = 3
+position = Vector2(0, -18)
+texture = ExtResource("1_s2np1")
+hframes = 16
+vframes = 11
 frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3.499998)
 scale = Vector2(0.56, 0.56)
 shape = SubResource("CircleShape2D_brfkd")
